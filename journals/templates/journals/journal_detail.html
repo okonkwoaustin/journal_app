@@ -11,7 +11,7 @@
         <p><strong>Mood:</strong> {{ journal.get_mood_display }}</p>
         <p>{{ journal.content }}</p>
         <p><em>Created: {{ journal.date_created }}</em></p>
-        <a href="" class="btn btn-warning">Edit</a>
+        <a href="{% url 'journal-update' journal.id %}" class="btn btn-warning">Edit</a>
         <a href="" class="btn btn-danger">Delete</a>
     </div>
 </div>
