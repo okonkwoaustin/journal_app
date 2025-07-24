@@ -1,0 +1,4 @@
+__pycache__/
+journal-env/
+db.sqlite3/
+media/

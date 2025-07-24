@@ -1,0 +1,18 @@
+{% extends 'journals/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary"></h2>
+    <a href="{% url 'home' %}" class="btn btn-outline-primary">Back Home</a>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h3>{{ journal.title }}</h3>
+        {% if journal.image %}<img src="{{ journal.image.url }}" class="img-fluid rounded" style="max-height:300px;">{% endif %}
+        <p><strong>Mood:</strong> {{ journal.get_mood_display }}</p>
+        <p>{{ journal.content }}</p>
+        <p><em>Created: {{ journal.date_created }}</em></p>
+        <a href="" class="btn btn-warning">Edit</a>
+        <a href="" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+{% endblock %}
