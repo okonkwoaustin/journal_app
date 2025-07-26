@@ -22,3 +22,6 @@ class Journal(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.date_created.strftime('%b %d, %Y')}"
+
+    class Meta:
+        ordering = ["-date_created"]

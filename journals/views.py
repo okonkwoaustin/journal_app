@@ -1,5 +1,6 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy, reverse
 
 from . models import Journal
 
@@ -13,7 +14,7 @@ class JournalCreate(CreateView):
     model = Journal
     template_name = "journals/journal_create.html"
     fields = "__all__"
-    success_url = "http://127.0.0.1:8000/"
+    success_url = reverse_lazy("home")
 
 
 class JournalDetail(DetailView):
@@ -24,9 +25,11 @@ class JournalUpdate(UpdateView):
     model = Journal
     template_name = "journals/journal_update.html"
     fields = "__all__"
-    success_url = "http://127.0.0.1:8000/"
     
-""" class JournalDelete(DeleteView):
+    def get_success_url(self):
+        return reverse('journal-detail', kwargs={'pk': self.object.pk})
+    
+class JournalDelete(DeleteView):
     model = Journal
     template_name = "journals/journal_delete.html"
-    success_url = reverse_lazy('journal_list') """
+    success_url = reverse_lazy("home")
