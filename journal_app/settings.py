@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     # Third-party apps
     "crispy_forms",
     "crispy_bootstrap5",
-    "pillow",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
