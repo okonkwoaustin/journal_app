@@ -13,8 +13,10 @@
         <p>{{ journal.content }}</p>
         <p><em>Created: {{ journal.date_created }}</em></p>
         <p><em>Update: {{ journal.last_updated }}</em></p>
+        {% if user.is_authenticated and user == journal.author %}
         <a href="{% url 'journal-update' journal.id %}" class="btn btn-warning">✏️ Edit</a>
         <a href="{% url 'journal-delete' journal.id %}" class="btn btn-danger">🗑️ Delete</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
