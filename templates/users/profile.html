@@ -1,0 +1,37 @@
+{% extends "journals/base.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow rounded-4">
+        <div class="card-body text-center">
+          <img src="{{ user.profile.avatar.url|default:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAlAMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAgQFBgMBB//EADMQAAICAQEGAwYFBQEAAAAAAAABAgMEEQUSITFRUhUikRMzNEFhcUJykqHBIzJigYIU/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AP04AAAAAAKudlrHhpHT2kuS6fUCeVl1Yy8z1k+UVzMm/Ovuem9uR6R4FeUpTk5SerfzPgBvXmAABZozr6GvO5LpLiVgBv4uXXkLReWfaz3Oai3F70XpJPVM2sDK/wDRDSXCxc11AtgAAAAAAAAAAAAI2zjVXKcv7YrVnPX2yutlZN8WaW2Ld2uFa/E9X9kZQAAAAAAAAAnVZKqyNkG9YkAB0lNiuqjZHlJar6EjN2Pa5RnVry4o0gAAAAAAAAAAAxNqT38yS7VoVCxtD4y37/wVwAAAAAAAAAAAt7Mlu5kOkuBtnP4fxdP5kdAAAAAAAAAAAAGHtOG7mTfdo/2KpqbYq1VdiXLg/wCDLAAAAAAAAAAACzs2O9mV/TibpmbGq4zsa4f2o0wAAAAAAAAAAAhdWrqp1ta7yOeshKuyUJLSUXxOkKW0MP28d+tf1EvVAYwDWjafBrmAAAAAAAShCVk1CC1k3oiK4vRGzs7D9gvaTX9Rrl0QFnHqVFMa18ubPQAAAAAAAAAAAAAAAq5mFXkeZeSxfi05/cybsa2l+eD3e5LVHQBrVaPiBzIOgnh4823KmOr+aWhDw/G191+7Awj1pxrrmtyt6dz5G1DDx4cqY/7Wp7packBUxMGGP5m9+zr8l9i2fQB8AAAAAAAAAKudmRxo7q81j5LoB73Wwpg5WSUUuvzKF21UuFMNf8pP+DOtsnbNzsk5N9SAFx7SyX+KK/5I+IZPev0oqgC14hk969B4hld69CqALXiGV3r0HiGV3r0KoAteIZXevQeIZXevQqgC14hld69D74jk96/SioANCvali97CMl9OBex82i/hGW7LtlwMEceoHTAysHaDTVd8tY8lNmrz5AAAB5ZV8cemU3zXJdWYE5ysm5zbcnzbLm1rd+6NfyguP3ZRAAAAAAAAAAAAAAAAAAAAauysrej7CxvVLyN9OhlE6puuyE4809QOjBGMt6MZLTRrUAYGTLfvsl1kzyJW+9n+ZkQAAAAAAAAAAAAAAAAAAAAADd2c97Dr+mqPg2T8HH7sAYtvvZ/mZEAAAAAAAAAAAAAAAAAAAAAAA3Nk/Bx+7AAH/9k=' }}"
+               alt="Avatar"
+               class="rounded-circle mb-3"
+               style="width:120px; height:120px; object-fit:cover;">
+
+          <h4 class="fw-bold">{{ user.get_full_name|default:user.username }}</h4>
+          <p class="text-muted mb-4">@{{ user.last_name }}</p>
+
+          <ul class="list-group list-group-flush text-start">
+            <li class="list-group-item">
+              <strong>Email:</strong> {{ user.email }}
+            </li>
+            <li class="list-group-item">
+              <strong>Date joined:</strong> {{ user.date_joined|date:"F j, Y" }}
+            </li>
+          </ul>
+
+          <div class="mt-4">
+            <a href="{% url 'settings' %}" class="btn btn-primary px-4 me-2">Edit Profile</a>
+            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger px-4">Logout</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "journals/base.html" %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-fade text-center text-white py-5 rounded shadow-sm 
+            bg-primary bg-gradient">
+    <h2 class="mb-3 fw-bold">
+        {% if user.is_authenticated %}
+            Welcome Back, <span class="fw-bolder">{{ user.first_name }}</span> ✨
+        {% else %}
+            Welcome to <span class="fw-bolder">Lumin</span> ✨
+        {% endif %}
+    </h2>
+
+    <p class="lead opacity-90">
+        Your personal space for reflection, journaling, and growth.
+    </p>
+
+    {% if user.is_authenticated %}
+        {% if user.journal_set.exists %}
+            <p class="small text-light">
+                Your last entry was {{ user.journal_set.latest.date_created|timesince }} ago.
+            </p>
+        {% endif %}
+        <div class="mt-4">
+            <a href="{% url 'journal-list' %}" class="btn btn-light btn-lg me-3 shadow-sm">
+                📖 My Journal
+            </a>
+            <a href="{% url 'journal-create' %}" class="btn btn-outline-light btn-lg shadow-sm">
+                ✍️ New Entry
+            </a>
+        </div>
+    {% else %}
+        <div class="mt-4">
+            <a href="{% url 'signup' %}" class="btn btn-success btn-lg me-3 shadow-sm">
+                🚀 Get Started
+            </a>
+            <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg shadow-sm">
+                🔑 Login
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Storytelling Section -->
+<div class="row mt-5 align-items-center">
+    <div class="col-md-6">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+             class="img-fluid rounded shadow-sm"
+             alt="Writing in journal"
+             loading="lazy">
+    </div>
+    <div class="col-md-6">
+        <h3 class="fw-bold">Why Journal with Lumin?</h3>
+        <p class="text-muted">
+            Journaling helps you reflect on your journey, understand your emotions,
+            and track your personal growth. With Lumin, your thoughts are safe,
+            organized, and always accessible.
+        </p>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=80"
+                 class="card-img-top rounded-top"
+                 alt="Write Freely"
+                 loading="lazy">
+            <div class="card-body">
+                <h4 class="card-title">✨ Write Freely</h4>
+                <p class="card-text text-muted">
+                    Capture your thoughts and ideas in a safe, private journal.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=500&q=80"
+                 class="card-img-top rounded-top"
+                 alt="Track Growth"
+                 loading="lazy">
+            <div class="card-body">
+                <h4 class="card-title">📅 Track Growth</h4>
+                <p class="card-text text-muted">
+                    See your journey unfold as you look back at past entries.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <img src="https://images.unsplash.com/photo-1531824475211-72594993ce2a?auto=format&fit=crop&w=500&q=80"
+                 class="card-img-top rounded-top"
+                 alt="Privacy First"
+                 loading="lazy">
+            <div class="card-body">
+                <h4 class="card-title">🔒 Privacy First</h4>
+                <p class="card-text text-muted">
+                    Your reflections are secure and for your eyes only.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

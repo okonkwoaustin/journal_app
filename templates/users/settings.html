@@ -1,0 +1,28 @@
+{% extends "journals/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white fw-semibold">
+          Account Settings
+        </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form %}
+              {{ form|crispy }}
+            {% else %}
+              <!-- fallback if not using crispy -->
+              {{ form.as_p }}
+            {% endif %}
+            <button type="submit" class="btn btn-primary w-100 mt-3">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

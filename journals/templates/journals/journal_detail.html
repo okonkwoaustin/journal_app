@@ -1,22 +1,53 @@
 {% extends 'journals/base.html' %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="text-primary"></h2>
-    <a href="{% url 'home' %}" class="btn btn-outline-primary">Back Home</a>
-</div>
-<div class="card">
-    <div class="card-body">
-        <h3>{{ journal.title }}</h3>
-        {% if journal.image %}<img src="{{ journal.image.url }}" class="img-fluid rounded" style="max-height:300px;">{% endif %}
-        <p><strong>Mood:</strong> {{ journal.get_mood_display }}</p>
-        <p><strong>Author:</strong> {{ journal.author }}</p>
-        <p>{{ journal.content }}</p>
-        <p><em>Created: {{ journal.date_created }}</em></p>
-        <p><em>Update: {{ journal.last_updated }}</em></p>
-        {% if user.is_authenticated and user == journal.author %}
-        <a href="{% url 'journal-update' journal.id %}" class="btn btn-warning">✏️ Edit</a>
-        <a href="{% url 'journal-delete' journal.id %}" class="btn btn-danger">🗑️ Delete</a>
-        {% endif %}
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary">📖 Journal Entry</h2>
+    <a href="{% url 'journal-list' %}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm">← Back</a>
+  </div>
+
+  <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
+    <div class="card-body p-4">
+
+      <h3 class="card-title text-dark fw-bold mb-3">{{ journal.title }}</h3>
+
+      {% if journal.image %}
+        <div class="row g-3 mt-3">
+              <div class="text-center mb-4">
+                  <img src="{{ journal.image.url }}" class="img-fluid rounded shadow-sm" style="max-height:350px;" alt="Journal image">
+              </div>
+      {% endif %}
+
+      <!-- Details -->
+      <ul class="list-unstyled mb-4">
+        <li><strong>Mood:</strong> {{ journal.get_mood_display }}</li>
+        <li>
+          <strong>Tags:</strong>
+          {% for tag in journal.tags.all %}
+              <span class="badge bg-secondary">{{ tag.name }}</span>
+          {% empty %}
+              <span class="text-muted">No tags</span>
+          {% endfor %}
+
+        </li>
+        <li><strong>Author:</strong> <span class="text-muted">{{ journal.author }}</span></li>
+        <li><em>Created: {{ journal.date_created|date:"F j, Y, g:i a" }}</em></li>
+        <li><em>Last Updated: {{ journal.last_updated|date:"F j, Y, g:i a" }}</em></li>
+      </ul>
+
+      <!-- Content -->
+      <p class="card-text fs-5 lh-lg text-muted">{{ journal.content }}</p>
+
+      <!-- Actions (only for author) -->
+      {% if user.is_authenticated and user == journal.author %}
+        <div class="d-flex gap-2 mt-4">
+          <a href="{% url 'journal-update' journal.id %}" class="btn btn-warning rounded-pill px-4 shadow-sm">✏️ Edit</a>
+          <a href="{% url 'journal-delete' journal.id %}" class="btn btn-danger rounded-pill px-4 shadow-sm">🗑️ Delete</a>
+        </div>
+      {% endif %}
     </div>
+  </div>
 </div>
 {% endblock %}

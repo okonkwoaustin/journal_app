@@ -1,34 +1,110 @@
 <!-- base.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <!-- ✅ This is very important for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Meta -->
+    <meta name="keywords" content="Lumin, journal app, mood tracker, online diary, personal journal, mental health, reflection, journaling, gratitude, self growth">
+    <meta name="description" content="Lumin is a modern mood journal and personal diary app—your light for clarity, self-discovery, and growth. Write daily entries, track emotions, and reflect on your journey.">
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:title" content="Lumin - Your Personal Mood Journal">
+    <meta property="og:description" content="Write, track your emotions, and grow with Lumin. A private, modern journaling experience.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/"> <!-- replace with your real domain -->
+    <meta property="og:image" content="https://yourdomain.com/static/images/preview.png"> 
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lumin - Your Personal Mood Journal">
+    <meta name="twitter:description" content="Write, track your emotions, and grow with Lumin. A private, modern journaling experience.">
+    <meta name="twitter:image" content="https://yourdomain.com/static/images/preview.png">
+
+
     <title>Lumin App</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      /* Gradient Navbar */
+      .gradient-blue {
+        background: linear-gradient(90deg, #007bff, #0056b3);
+      }
+      @media (max-width: 991px) {
+  .navbar .dropdown-menu {
+    position: absolute;
+    right: 0;
+    left: auto;
+    margin-top: 0.5rem; /* spacing so it looks like desktop */
+  }
+}
+.hero-fade {
+  animation: fadeIn 1.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.btn-primary:hover,
+.btn-success:hover {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark gradient-blue">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">Lumin</a>
-        <div class="d-flex">
-          {% if user.is_authenticated %}
-            <span class="navbar-text me-3">Hello, {{ user.username }}</span>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
-            </form>
-          {% else %}
-            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm me-2">Login</a>
-            <a href="{% url 'signup' %}" class="btn btn-outline-success btn-sm">Sign Up</a>
-          {% endif %}
-        </div>
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">🌟 Lumin</a>
+
+        {% if user.is_authenticated %}
+<ul class="navbar-nav ms-auto">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white"
+       href="#"
+       id="userMenu"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false"> Hi, 
+      {{ user.first_name }}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="userMenu">
+      <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+      <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li>
+        <form method="post" action="{% url 'logout' %}" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" class="dropdown-item text-danger">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </li>
+</ul>
+{% else %}
+<div class="ms-auto">
+  <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-2">Login</a>
+  <a href="{% url 'signup' %}" class="btn btn-success btn-sm">Get Started</a>
+</div>
+{% endif %}
+
       </div>
     </nav>
 
+    <!-- Main Content -->
     <div class="container mt-4">
-        <h1 class="text-center text-primary">Lumin</h1>
-        <p class="text-center">Light, Insight, and Self-discovery</p>
-        <hr>
-        {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
     </div>
+
+    <!-- ✅ Bootstrap JS for navbar toggle (mobile menu) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
